@@ -1,6 +1,1 @@
 .idea/
-
-/backend/gradle/wrapper/gradle-wrapper.jar
-/backend/build/
-/backend/.gradle/
-/mongodb_data
