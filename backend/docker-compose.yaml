@@ -2,17 +2,18 @@ version: '3.5'
 
 services:
     
-    mongodb:
-        container_name: mongodb
+    mongo:
         image: mongo:latest
-        ports:
-            - "${MONGO_PORT}:27017"
-        restart: unless-stopped
+        container_name: mongo
+        restart: always
         environment:
-            - MONGO_INITDB_ROOT_USERNAME=${MONGO_USERNAME}
-            - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}
-        volumes:
-            - mongodb_data:/data/db
-
-volumes:
-    mongodb_data:
+            MONGO_INITDB_ROOT_USERNAME: root
+            MONGO_INITDB_ROOT_PASSWORD: 1
+        ports:
+            - "27017:27017"
+    
+    redis:
+        image: redis:latest
+        container_name: redis-orion
+        ports:
+            - "${REDIS_PORT}:6379"
