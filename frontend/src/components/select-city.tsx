@@ -12,15 +12,16 @@ import {
 import {useEffect, useRef, useState} from "react";
 import api from "@/lib/axios";
 
-export function SelectDemo({city, setCity}: {city: string, setCity: (value: string) => void }) {
+export function SelectCity({city, setCity}: {city: string, setCity: (value: string) => void }) {
 
-    const [cities, setCities] = useState<City[]>([])
+    const [cities, setCities] = useState<string[]>([])
     const hasFetched = useRef(false)
 
-    // TODO: дергать города надо
     useEffect(() => {
         if (hasFetched.current) return
-        api.get("/city").then((res) => setCities(res.data))
+        api.get("/v1/dashboard/city").then((res) => {
+            setCities(res.data)
+        })
             .catch(error => console.log(error))
     }, []);
 
@@ -32,10 +33,11 @@ export function SelectDemo({city, setCity}: {city: string, setCity: (value: stri
             <SelectContent>
                 <SelectGroup>
                     <SelectLabel>Города</SelectLabel>
-                    {cities.length > 0 ? (
+                    {
+                        cities.length > 0 ? (
                         cities.map((city) => (
-                            <SelectItem key={city.name} value={city.name}>
-                                {city.name}
+                            <SelectItem key={city} value={city}>
+                                {city}
                             </SelectItem>
                         ))
                     ) : (

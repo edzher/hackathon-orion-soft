@@ -11,13 +11,14 @@ import {
     SidebarMenuItem,
 } from "@/components/ui/sidebar"
 import {Input} from "@/components/ui/input";
-import {SelectDemo} from "@/components/select";
+import {SelectCity} from "@/components/select-city";
 import {DatePicker} from "@/components/date-picker";
 import {Label} from "@/components/ui/label";
 import * as React from "react";
 import {useState} from "react";
 import { toast } from "sonner"
 import {useFilters} from "@/context/filters";
+import {SelectCompany} from "@/components/select-company";
 
 export function Filters() {
 
@@ -26,6 +27,7 @@ export function Filters() {
     const [vacancy, setVacancy] = useState<string>("");
     const [experience, setExperience] = useState<string>("");
     const [city, setCity] = useState<string>("");
+    const [company, setCompany] = useState<string>("");
     const [minSalary, setMinSalary] = useState<string>("");
     const [maxSalary, setMaxSalary] = useState<string>("");
     const [startDate, setStartDate] = useState<Date | undefined>(undefined);
@@ -67,7 +69,8 @@ export function Filters() {
             startDate: formatDateToUTCMoscow(startDate),
             endDate: formatDateToUTCMoscow(endDate),
             telegram: telegram,
-            headhunter: headhunter
+            headhunter: headhunter,
+            superjob: superjob
         }))
     }
 
@@ -75,6 +78,7 @@ export function Filters() {
         setVacancy("");
         setExperience("")
         setCity("")
+        setCompany("")
         setStartDate(undefined)
         setEndDate(undefined)
         setMinSalary("")
@@ -112,7 +116,8 @@ export function Filters() {
                     </Label>
                     <Input type="text" value={vacancy} placeholder="Вакансия" onChange={(e) => setVacancy(e.target.value)}/>
                     <Input type="text" value={experience} placeholder="Стаж" className="appearance-none" onChange={(e) => setExperience(e.target.value)}/>
-                    <SelectDemo city={city} setCity={setCity}/>
+                    <SelectCity city={city} setCity={setCity}/>
+                    <SelectCompany company={company} setCompany={setCompany}/>
 
                     <Label htmlFor="basic" className="px-1 pt-3 pb-1">
                         Зарплата

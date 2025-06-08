@@ -1,3 +1,4 @@
 type City = {
     name: string
 }
+

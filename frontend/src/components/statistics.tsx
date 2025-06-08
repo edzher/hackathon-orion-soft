@@ -25,12 +25,14 @@ export function Statistics() {
 
     useEffect(() => {
         try {
-            // TODO: Добавить ручку поиска
-            api.post("/search", filters, {
+            api.post("/v1/dashboard/analytics/salary-statistic", filters, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
-            }).then(res => setSalaryStatistic(res.data))
+            }).then(res => {
+                console.log(res)
+                setSalaryStatistic(res.data)
+            })
                 .catch(() => setError("Не удалить загрузить данные"))
                 .finally(() => setLoading(false))
             toast.info("Запрос данных для графика прошел успешно")
