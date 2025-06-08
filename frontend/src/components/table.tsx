@@ -224,8 +224,7 @@ export function VacanciesTable() {
 
     useEffect(() => {
         try {
-            // TODO: Добавить ручку поиска с пагинацией
-            api.post("/search", filters, {
+            api.post(`/v1/dashboard?page=${filters.page}&size=${filters.limit}`, filters, {
                 headers: {
                     'Content-Type': 'application/json'
                 }

@@ -22,6 +22,8 @@ export type FiltersData = {
 const defaultFilters: FiltersData = {
     vacancy: 'Курьер',
     experience: 0,
+    startDate: '2023-04-03',
+    endDate: '2025-07-20',
     city: 'Москва',
     minSalary: 0,
     maxSalary: 0,
