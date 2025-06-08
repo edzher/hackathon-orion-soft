@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.fox.orion.core.constants.ApiKeys;
 import ru.fox.orion.model.dto.RequestFilter;
+import ru.fox.orion.model.dto.SalaryStatistic;
 import ru.fox.orion.model.entity.VacancyEntity;
 import ru.fox.orion.service.VacancyService;
 
@@ -57,15 +58,20 @@ public class DashboardController {
     @Operation(
             summary = "Статистика зарплат по городу"
     )
-    @GetMapping("/salary-stats/{city}")
-    public ResponseEntity<Map<String, Object>> salaryStats(@PathVariable String city) {
+    @GetMapping("/salary-stats")
+    public ResponseEntity<Map<String, Object>> salaryStats(@RequestBody String city) {
         return ResponseEntity.ok(vacancyService.getSalaryStatistics(city));
     }
 
-    @Operation(
+    @PostMapping("/analytics/salary-statistic")
+    public SalaryStatistic getSalaryStatistic(@RequestBody RequestFilter filter) {
+        return vacancyService.getSalaryStatistic(filter);
+    }
+
+    /*@Operation(
             summary = "Тренды вакансий"
-    )
-    @GetMapping("/trends")
+    )*/
+    /*@GetMapping("/trends")
     public ResponseEntity<List<Map<String, Object>>> trends(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate) {
         return ResponseEntity.ok(vacancyService.getJobTrends(startDate));
@@ -85,7 +91,7 @@ public class DashboardController {
     @GetMapping("/skills-demand")
     public ResponseEntity<List<Map<String, Object>>> skillsDemand() {
         return ResponseEntity.ok(vacancyService.getSkillsDemand());
-    }
+    }*/
 
     @PostMapping("/report")
     public void report(@RequestBody RequestFilter request) {
