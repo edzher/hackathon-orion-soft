@@ -71,7 +71,10 @@ export function ChartAreaInteractive() {
     useEffect(() => {
         try {
             api.get(`/api/reports/analytics/salary-by-day?from=${filters.startDate}&to=${filters.endDate}&job=${filters.vacancy}`)
-                .then(res => setChartSalary(res.data))
+                .then(res => {
+                    console.log("res", res)
+                    setChartSalary(res.data)
+                })
                 .catch(() => setError("Не удалось загрузить статистику"))
                 .finally(() => setLoading(false))
             toast.info("Запрос данных для графика прошел успешно")

@@ -7,14 +7,14 @@ import logging
 from typing import List
 
 class HHParser:
-    def __init__(self, jobs: List[str]):
+    def __init__(self, jobs: List[str], MongoDB):
         self.__jobs = jobs
         self.__logger = logging.getLogger("hh_parser")
         self.__headers = {
             "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
             "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.5 Safari/605.1.15",
         }
-        # self.__mongodb = mongodb
+        self.__mongodb = mongodb
 
     def parsing(self):
         for job in self.__jobs:
