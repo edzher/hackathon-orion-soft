@@ -8,7 +8,6 @@ from dotenv import load_dotenv
 
 app = Flask(__name__)
 load_dotenv()
-
 api_id = int(os.getenv("API_ID"))
 api_hash = os.getenv("API_HASH")
 redis_host = os.getenv("REDIS_HOST", "localhost")
