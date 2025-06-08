@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.*;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -87,7 +88,7 @@ public class VacancyServiceImpl implements VacancyService {
             .getUniqueMappedResult();
     }
 
-    @Override
+    /*@Override
     @Cacheable(value = "trends", unless = "#result.isEmpty()")
     public List<Map<String, Object>> getJobTrends(LocalDate startDate) {
         MatchOperation matchStage = Aggregation.match(
@@ -107,9 +108,9 @@ public class VacancyServiceImpl implements VacancyService {
         
         return mongoTemplate.aggregate(aggregation, "vacancies", Map.class)
             .getMappedResults();
-    }
+    }*/
 
-    @Override
+    /*@Override
     @Cacheable(value = "companyStats", unless = "#result.isEmpty()")
     public List<Map<String, Object>> getTopCompanies() {
         GroupOperation groupStage = Aggregation.group("company")
@@ -141,5 +142,5 @@ public class VacancyServiceImpl implements VacancyService {
         
         return mongoTemplate.aggregate(aggregation, "vacancies", Map.class)
             .getMappedResults();
-    }
+    }*/
 }

@@ -57,15 +57,15 @@ public class DashboardController {
     @Operation(
             summary = "Статистика зарплат по городу"
     )
-    @GetMapping("/salary-stats/{city}")
-    public ResponseEntity<Map<String, Object>> salaryStats(@PathVariable String city) {
+    @GetMapping("/salary-stats")
+    public ResponseEntity<Map<String, Object>> salaryStats(@RequestBody String city) {
         return ResponseEntity.ok(vacancyService.getSalaryStatistics(city));
     }
 
     @Operation(
             summary = "Тренды вакансий"
     )
-    @GetMapping("/trends")
+    /*@GetMapping("/trends")
     public ResponseEntity<List<Map<String, Object>>> trends(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate) {
         return ResponseEntity.ok(vacancyService.getJobTrends(startDate));
@@ -85,7 +85,7 @@ public class DashboardController {
     @GetMapping("/skills-demand")
     public ResponseEntity<List<Map<String, Object>>> skillsDemand() {
         return ResponseEntity.ok(vacancyService.getSkillsDemand());
-    }
+    }*/
 
     @PostMapping("/report")
     public void report(@RequestBody RequestFilter request) {

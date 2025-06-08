@@ -19,9 +19,9 @@ public interface VacancyService {
     
     Map<String, Object> getSalaryStatistics(String city);
     
-    List<Map<String, Object>> getJobTrends(LocalDate startDate);
+    //List<Map<String, Object>> getJobTrends(LocalDate startDate);
     
-    List<Map<String, Object>> getTopCompanies();
+    /*List<Map<String, Object>> getTopCompanies();
     
-    List<Map<String, Object>> getSkillsDemand();
+    List<Map<String, Object>> getSkillsDemand();*/
 }
