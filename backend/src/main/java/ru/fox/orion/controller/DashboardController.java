@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.fox.orion.core.constants.ApiKeys;
 import ru.fox.orion.model.dto.RequestFilter;
+import ru.fox.orion.model.dto.SalaryStatistic;
 import ru.fox.orion.model.entity.VacancyEntity;
 import ru.fox.orion.service.VacancyService;
 
@@ -62,9 +63,14 @@ public class DashboardController {
         return ResponseEntity.ok(vacancyService.getSalaryStatistics(city));
     }
 
-    @Operation(
+    @PostMapping("/analytics/salary-statistic")
+    public SalaryStatistic getSalaryStatistic(@RequestBody RequestFilter filter) {
+        return vacancyService.getSalaryStatistic(filter);
+    }
+
+    /*@Operation(
             summary = "Тренды вакансий"
-    )
+    )*/
     /*@GetMapping("/trends")
     public ResponseEntity<List<Map<String, Object>>> trends(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate) {

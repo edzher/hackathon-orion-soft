@@ -13,6 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.aggregation.AggregationResults;
+import org.springframework.data.mongodb.core.aggregation.ArithmeticOperators;
 import org.springframework.stereotype.Service;
 import org.springframework.data.mongodb.core.aggregation.AggregationOperation;
 import org.springframework.data.mongodb.core.aggregation.AggregationExpression;
@@ -252,23 +253,26 @@ public class ReportService {
 
     public List<SalaryByDayDto> getAvgSalaryByDay(String job, LocalDate from, LocalDate to) {
         Aggregation aggregation = Aggregation.newAggregation(
-            Aggregation.match(
-                Criteria.where("должность").is(job)
-                        .andOperator(
-                            Criteria.where("дата_размещения").gte(from),
-                            Criteria.where("дата_размещения").lte(to)
-                        )
-            ),
-            Aggregation.project()
-                .and(DateOperators.DateToString.dateOf("дата_размещения").toString("%Y-%m-%d")).as("date")
-                .andExpression("({ $add: [ '$зарплата_от', '$зарплата_до' ] } / 2)").as("salary"),
-            Aggregation.group("date")
-                .avg("salary").as("avgSalary"),
-            Aggregation.sort(Sort.Direction.ASC, "_id")
+                Aggregation.match(
+                        Criteria.where("position").is(job)
+                                .andOperator(
+                                        Criteria.where("publishedDate").gte(from),
+                                        Criteria.where("publishedDate").lte(to)
+                                )
+                ),
+                Aggregation.project()
+                        .and(DateOperators.DateToString.dateOf("publishedDate").toString("%Y-%m-%d")).as("date")
+                        .and("minSalary").as("salary"),
+                Aggregation.group("date")
+                        .avg("salary").as("avgSalary"),
+                Aggregation.sort(Sort.Direction.ASC, "_id"),
+                Aggregation.project()
+                        .and("_id").as("date")
+                        .and("avgSalary").as("salary")
         );
 
         AggregationResults<SalaryByDayDto> results = mongoTemplate.aggregate(
-            aggregation, "vacancies", SalaryByDayDto.class
+                aggregation, "vacancies", SalaryByDayDto.class
         );
         return results.getMappedResults();
     }

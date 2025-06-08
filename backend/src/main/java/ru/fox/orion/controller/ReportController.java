@@ -40,11 +40,11 @@ public class ReportController {
 
     @GetMapping("/analytics/salary-by-day")
     public List<SalaryByDayDto> getSalaryByDay(
-            @RequestParam String job,
+            //@RequestParam String job,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to
     ) {
-        return reportService.getAvgSalaryByDay(job, from, to);
+        return reportService.getAvgSalaryByDay("Курьер", from, to);
     }
 
 } 
