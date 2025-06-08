@@ -1,0 +1,3 @@
+type Resume = {
+    id: number;
+}
