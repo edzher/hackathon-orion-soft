@@ -15,6 +15,8 @@ import {ProgressBar} from "@/components/progress-bar";
 import {Alert, AlertDescription, AlertTitle} from "@/components/ui/alert";
 import * as React from "react";
 
+import salary_data from "./salary_data.json"
+
 export function Statistics() {
 
     const [salaryStatistic, setSalaryStatistic] = useState<SalaryStatistic>()
@@ -25,13 +27,13 @@ export function Statistics() {
 
     useEffect(() => {
         try {
+            console.log(filters)
             api.post("/v1/dashboard/analytics/salary-statistic", filters, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
             }).then(res => {
-                console.log(res)
-                setSalaryStatistic(res.data)
+                setSalaryStatistic(salary_data)
             })
                 .catch(() => setError("Не удалить загрузить данные"))
                 .finally(() => setLoading(false))
@@ -42,7 +44,17 @@ export function Statistics() {
                 description: "Не удалось подключиться к серверу.",
             })
         }
-    }, [filters.vacancy, filters.experience, filters.minSalary, filters.maxSalary, filters.city, filters.headhunter, filters.telegram]);
+    }, [
+        filters.job,
+        filters.experience,
+        filters.minSalary,
+        filters.maxSalary,
+        filters.city,
+        filters.headhunter,
+        filters.telegram,
+        filters.startDate,
+        filters.endDate,
+    ]);
 
     if (loading) {
         return (

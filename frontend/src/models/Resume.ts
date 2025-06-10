@@ -1,3 +1,0 @@
-type Resume = {
-    id: number;
-}

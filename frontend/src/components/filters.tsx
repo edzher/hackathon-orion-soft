@@ -24,7 +24,7 @@ export function Filters() {
 
     const {setFilters} = useFilters()
 
-    const [vacancy, setVacancy] = useState<string>("");
+    const [job, setJob] = useState<string>("");
     const [experience, setExperience] = useState<string>("");
     const [city, setCity] = useState<string>("");
     const [company, setCompany] = useState<string>("");
@@ -38,10 +38,8 @@ export function Filters() {
 
 
     const formatDateToUTCMoscow = (date?: Date): string | undefined => {
-        if (!date) return undefined;
-        return new Date(date.getTime() + 3 * 60 * 60 * 1000)
-            .toISOString()
-            .replace('Z', '+03:00');
+        if (!date) return new Date().toISOString().split('T')[0];
+        return date.toISOString().split('T')[0];
     };
 
 
@@ -61,7 +59,7 @@ export function Filters() {
 
         setFilters(prev => ({
             ...prev,
-            vacancy: vacancy,
+            job: job,
             experience: experience === "" ? 0 : experienceNum,
             city: city,
             minSalary: minSalary === "" ? 0 : minSalaryNum,
@@ -75,7 +73,7 @@ export function Filters() {
     }
 
     const clear = async () => {
-        setVacancy("");
+        setJob("");
         setExperience("")
         setCity("")
         setCompany("")
@@ -114,7 +112,7 @@ export function Filters() {
                     <Label htmlFor="basic" className="px-1 pt-3 pb-1">
                         Основные параметры
                     </Label>
-                    <Input type="text" value={vacancy} placeholder="Вакансия" onChange={(e) => setVacancy(e.target.value)}/>
+                    <Input type="text" value={job} placeholder="Вакансия" onChange={(e) => setJob(e.target.value)}/>
                     <Input type="text" value={experience} placeholder="Стаж" className="appearance-none" onChange={(e) => setExperience(e.target.value)}/>
                     <SelectCity city={city} setCity={setCity}/>
                     <SelectCompany company={company} setCompany={setCompany}/>

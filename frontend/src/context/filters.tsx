@@ -4,35 +4,36 @@
 import React, { createContext, useContext, useState } from 'react'
 
 export type FiltersData = {
-    vacancy: string
-    experience: number
-    city: string
-    minSalary: number
-    maxSalary: number
+    job: string
+    experience?: number
+    city?: string
+    minSalary?: number
+    maxSalary?: number
     startDate?: string
     endDate?: string
     telegram: boolean
     headhunter: boolean
     superjob: boolean
-    timeRange: string
+    timeRange?: string
     page: number
-    limit: number
+    size: number
 }
 
+const formatDateToUTCMoscow = (date?: Date): string | undefined => {
+    if (!date) return new Date().toISOString().split('T')[0];
+    return date.toISOString().split('T')[0];
+};
+
+
 const defaultFilters: FiltersData = {
-    vacancy: 'Курьер',
-    experience: 0,
-    startDate: '2023-04-03',
-    endDate: '2025-07-20',
-    city: 'Москва',
-    minSalary: 0,
-    maxSalary: 0,
+    job: 'Курьер',
+    startDate: formatDateToUTCMoscow(undefined),
+    endDate: formatDateToUTCMoscow(undefined),
     telegram: false,
-    headhunter: true,
     superjob: false,
-    timeRange: '3m',
+    headhunter: false,
     page: 0,
-    limit: 10,
+    size: 20,
 }
 
 type FiltersContextType = {
