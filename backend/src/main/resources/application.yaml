@@ -25,9 +25,10 @@ spring:
         mongodb:
             host: ${MONGO_HOST:localhost}
             port: ${MONGO_PORT:27017}
-            database: ${MONGO_DATABASE:orion}
+            database: ${MONGO_DATABASE:admin}
             username: ${MONGO_USERNAME:root}
-            password: ${MONGO_PASSWORD:example}
+            password: ${MONGO_PASSWORD:1}
+            authentication-database: admin
     
     cache:
         type: redis
@@ -62,3 +63,14 @@ client:
     parser:
         host: ${PARSER_HOST}
         port: ${PARSER_PORT}
+        
+s3:
+    access:
+        key: ${AWS_ACCESS_KEY_ID}
+        secret: ${AWS_SECRET_ACCESS_KEY}
+    endpoint: ${AWS_API_ENDPOINT}
+    bucket: ${AWS_S3_BUCKET}
+    region: ${AWS_REGION}
+
+pdf:
+    s3key: my-pdf-key

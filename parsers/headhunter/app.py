@@ -1,13 +1,14 @@
-from flask import Flask
-from core.parser import fetch_messages
-from parsers.avito.client.mongodb.mongodb import MongoDB
-from parsers.headhunter.core.parser import HHParser
+from flask import Flask, jsonify
 import os
+from dotenv import load_dotenv
+from parsers.superjob.client.mongodb.mongodb import MongoDB
+from parsers.headhunter.core.parser import HHParser
+
+load_dotenv()
 
 app = Flask(__name__)
 
-
-@app.route('/parse', methods = ["GET"])
+@app.route('/parse', methods=["GET"])
 def parse():
     mongo = MongoDB(
         host=os.getenv("MONGO_HOST", "localhost"),
@@ -15,13 +16,11 @@ def parse():
         database=os.getenv("MONGO_DB", "vacancy_db"),
         collection=os.getenv("MONGO_COLLECTION", "vacancies")
     )
-    parser = HHParser([
-        'Курьер'
-    ], mongo)
-    parser.parsing()
 
+    parser = HHParser(["Курьер"], mongo)
+    parser.parsing()
+    return jsonify({"message": "Парсинг завершён и данные сохранены в MongoDB"}), 200
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5010)
-
+    app.run(debug=True, host='0.0.0.0', port=5001)

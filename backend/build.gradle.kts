@@ -30,12 +30,25 @@ dependencies {
 	implementation("org.codehaus.janino:janino:3.1.11")
 	implementation("net.logstash.logback:logstash-logback-encoder:7.2")
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0")
+	implementation("software.amazon.awssdk:s3:2.21.42")
+	implementation("org.springframework.boot:spring-boot-starter-data-redis")
+	implementation("org.springframework.data:spring-data-redis")
+
 
 	compileOnly("org.projectlombok:lombok")
 	annotationProcessor("org.projectlombok:lombok")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	"developmentOnly"("org.springframework.boot:spring-boot-devtools")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+
+	// iText для генерации PDF
+	implementation("com.itextpdf:itextpdf:5.5.13.3")
+	
+	// JFreeChart для создания графиков
+	implementation("org.jfree:jfreechart:1.5.3")
+
+	// Jackson для поддержки LocalDate
+	implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
 }
 
 tasks.withType<Test> {

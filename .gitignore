@@ -4,5 +4,8 @@
 /backend/build/
 /backend/.gradle/
 /mongodb_data
+/parsers/headhunter/.env
+/parsers/superjob/.env
+/parsers/telegram/.env
 /frontend/node_modules/
 /frontend/.next/

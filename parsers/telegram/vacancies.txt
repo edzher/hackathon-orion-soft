@@ -1,0 +1,10 @@
+#собесы #java #senior
+Вопросы, которые могут задать на собеседовании Senior Java Developer.
+Проверьте себя без помощи поисковиков!
+❓Что такое Optional?
+Пример кода:
+Optional<String> optional = Optional.of("Hello");
+optional.ifPresent(System.out::println);
+❗️Optional — это контейнер для значения, которое может быть null. Он помогает избежать NullPointerException и делает код более читаемым. Optional предоставляет методы для безопасной работы с потенциально отсутствующими значениями, такие как isPresent(), orElse(), ifPresent().
+Ссылка на документацию по Optional
+========================================
