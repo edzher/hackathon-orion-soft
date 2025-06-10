@@ -79,14 +79,18 @@ import {ProgressBar} from "@/components/progress-bar";
 import {Alert, AlertDescription, AlertTitle} from "@/components/ui/alert";
 
 export const schema = z.object({
-    id: z.number(),
-    vacancy: z.string(),
-    source: z.string(),
-    city: z.string(),
-    salary: z.string(),
-    experience: z.string(),
-    link: z.string(),
+    id: z.string().uuid(),
+    job: z.string().optional(),
+    source: z.string().optional(),
+    city: z.string().optional(),
+    salary: z.number().optional(),
+    experience: z.string().optional(),
+    // link: z.string(),
 })
+
+const contentSchema = z.object({
+    content: z.array(schema),
+});
 
 function DragHandle({ id }: { id: number }) {
     const { attributes, listeners } = useSortable({
@@ -111,7 +115,7 @@ const columns: ColumnDef<z.infer<typeof schema>>[] = [
     {
         id: "drag",
         header: () => null,
-        cell: ({ row }) => <DragHandle id={row.original.id} />,
+        cell: ({ row }) => <DragHandle id={row.index} />,
     },
     {
         accessorKey: "vacancy",
@@ -119,7 +123,7 @@ const columns: ColumnDef<z.infer<typeof schema>>[] = [
         cell: ({ row }) => (
             <div className="w-32">
                 <Badge variant="outline" className="text-muted-foreground px-1.5">
-                    {row.original.vacancy}
+                    {row.original.job}
                 </Badge>
             </div>
         ),
@@ -162,21 +166,21 @@ const columns: ColumnDef<z.infer<typeof schema>>[] = [
             </Badge>
         ),
     },
-    {
-        accessorKey: "link",
-        header: "Ссылка",
-        cell: ({ row }) => (
-            <a
-                href={row.original.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-600 hover:underline"
-            >
-                {row.original.link}
-            </a>
-        ),
-        enableHiding: false,
-    },
+    // {
+    //     accessorKey: "link",
+    //     header: "Ссылка",
+    //     cell: ({ row }) => (
+    //         <a
+    //             href={row.original.link}
+    //             target="_blank"
+    //             rel="noopener noreferrer"
+    //             className="text-blue-600 hover:underline"
+    //         >
+    //             {row.original.link}
+    //         </a>
+    //     ),
+    //     enableHiding: false,
+    // },
 ]
 
 function DraggableRow({ row }: { row: Row<z.infer<typeof schema>> }) {
@@ -222,31 +226,48 @@ export function VacanciesTable() {
     const [error, setError] = useState<string | null>(null)
 
 
-    useEffect(() => {
-        try {
-            api.post(`/v1/dashboard?page=${filters.page}&size=${filters.limit}`, filters, {
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }).then(res => setData(res.data))
-                .catch(() => setError("Не удалить загрузить данные"))
-                .finally(() => setLoading(false))
-            toast.info("Запрос данных для графика прошел успешно")
-        } catch (error) {
-            console.log(error);
-            toast.error("Ошибка при отправке фильтров", {
-                description: "Не удалось подключиться к серверу.",
-            })
-        }
-    }, [filters.city,
-        filters.vacancy,
-        filters.experience,
-        filters.maxSalary,
-        filters.minSalary,
-        filters.telegram,
-        filters.headhunter,
-        filters.page,
-        filters.limit]);
+    // useEffect(() => {
+    //     try {
+    //         console.log(filters)
+    //         api.post(`/v1/dashboard?page=${filters.page}&size=${filters.size}`, filters, {
+    //             headers: {
+    //                 'Content-Type': 'application/json'
+    //             }
+    //         }).then(res => {
+    //             const parsed = contentSchema.safeParse(res.data);
+    //
+    //             if (parsed.success) {
+    //                 console.log(parsed.data.content)
+    //                 setData(parsed.data.content);
+    //                 toast.success("Данные успешно загружены");
+    //             } else {
+    //                 console.error(parsed.error);
+    //                 toast.error("Ошибка валидации данных от сервера");
+    //                 setError("Получены некорректные данные");
+    //             }
+    //
+    //         })
+    //             .catch(() => setError("Не удалить загрузить данные"))
+    //             .finally(() => setLoading(false))
+    //         toast.info("Запрос данных для графика прошел успешно")
+    //     } catch (error) {
+    //         console.log(error);
+    //         toast.error("Ошибка при отправке фильтров", {
+    //             description: "Не удалось подключиться к серверу.",
+    //         })
+    //     }
+    // }, [filters.city,
+    //     filters.job,
+    //     filters.experience,
+    //     filters.maxSalary,
+    //     filters.minSalary,
+    //     filters.startDate,
+    //     filters.endDate,
+    //     filters.telegram,
+    //     filters.headhunter,
+    //     filters.page,
+    //     filters.size
+    // ]);
 
     if (loading) {
         return (

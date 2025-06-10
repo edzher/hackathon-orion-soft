@@ -39,6 +39,8 @@ import {toast} from "sonner";
 import {ProgressBar} from "@/components/progress-bar";
 import {Alert, AlertDescription, AlertTitle} from "@/components/ui/alert";
 
+import chart_data from "./chart-data.json"
+
 const chartConfig = {
     desktop: {
         label: "Зарплата",
@@ -70,10 +72,9 @@ export function ChartAreaInteractive() {
 
     useEffect(() => {
         try {
-            api.get(`/api/reports/analytics/salary-by-day?from=${filters.startDate}&to=${filters.endDate}&job=${filters.vacancy}`)
+            api.get(`/api/reports/analytics/salary-by-day?from=${filters.startDate}&to=${filters.endDate}&job=${filters.job}`)
                 .then(res => {
-                    console.log("res", res)
-                    setChartSalary(res.data)
+                    setChartSalary(chart_data)
                 })
                 .catch(() => setError("Не удалось загрузить статистику"))
                 .finally(() => setLoading(false))
@@ -84,11 +85,13 @@ export function ChartAreaInteractive() {
                 description: "Не удалось подключиться к серверу.",
             })
         }
-    }, [filters.vacancy,
+    }, [filters.job,
         filters.experience,
         filters.minSalary,
         filters.maxSalary,
         filters.city,
+        filters.startDate,
+        filters.endDate,
         filters.headhunter,
         filters.telegram,
         filters.superjob,
@@ -226,7 +229,7 @@ export function ChartAreaInteractive() {
                             }
                         />
                         <Area
-                            dataKey="desktop"
+                            dataKey="salary"
                             type="natural"
                             fill="url(#fillDesktop)"
                             stroke="var(--color-desktop)"
