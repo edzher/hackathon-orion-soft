@@ -1,1 +1,11 @@
 .idea/
+
+/backend/gradle/wrapper/gradle-wrapper.jar
+/backend/build/
+/backend/.gradle/
+/mongodb_data
+/parsers/headhunter/.env
+/parsers/superjob/.env
+/parsers/telegram/.env
+/frontend/node_modules/
+/frontend/.next/
